@@ -46,6 +46,9 @@ public final class StreamLineHelper extends JavaPlugin implements PluginMessageL
         }
         ByteArrayDataInput in = ByteStreams.newDataInput(message);
         String subchannel = in.readUTF();
+
+        getLogger().info("Received plugin message from StreamLine Main on sub-channel \"" + subchannel + "\".");
+
         if (subchannel.equals("request.displayname")) {
             Messenger.sendDisplayNameUpdate(player);
             return;

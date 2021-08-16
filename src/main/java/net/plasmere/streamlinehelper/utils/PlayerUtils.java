@@ -19,7 +19,7 @@ public class PlayerUtils {
 
     public static Player findPlayerByUUID(String uuid) {
         for (Player player : onlinePlayers()) {
-            if (player.getUniqueId().equals(uuid)) return player;
+            if (player.getUniqueId().toString().equals(uuid)) return player;
         }
 
         return null;
