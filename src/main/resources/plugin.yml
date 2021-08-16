@@ -1,0 +1,7 @@
+name: StreamLine Helper
+version: ${project.version}
+main: net.plasmere.streamlinehelper.StreamLineHelper
+api-version: 1.15
+authors: [ Nitrate ]
+description: A plugin to help with the StreamLine Bungeecord plugin!
+website: https://store.plasmere.net
