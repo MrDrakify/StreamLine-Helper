@@ -24,7 +24,7 @@ public final class StreamLineHelper extends JavaPlugin implements PluginMessageL
         // Plugin startup logic
         instance = this;
 
-        checkIfBungee();
+        //checkIfBungee();
 
         getServer().getMessenger().registerIncomingPluginChannel(this, customChannel, this);
         getServer().getMessenger().registerOutgoingPluginChannel(this, customChannel);
@@ -64,12 +64,12 @@ public final class StreamLineHelper extends JavaPlugin implements PluginMessageL
     // we check like that if the specified server is BungeeCord.
     private void checkIfBungee()
     {
-        if ( !getServer().spigot().getConfig().getConfigurationSection("settings").getBoolean( "settings.bungeecord" ) )
+        if (! getServer().spigot().getConfig().getBoolean("settings.bungeecord"))
         {
-            getLogger().severe( "This server is not BungeeCord." );
-            getLogger().severe( "If the server is already hooked to BungeeCord, please enable it into your spigot.yml aswell." );
-            getLogger().severe( "Plugin disabled!" );
-            getServer().getPluginManager().disablePlugin( this );
+            getLogger().severe("This server is not BungeeCord.");
+            getLogger().severe("If the server is already hooked to BungeeCord, please enable it into your spigot.yml aswell.");
+            getLogger().severe("Plugin disabled!");
+            getServer().getPluginManager().disablePlugin(this);
         }
     }
 }
