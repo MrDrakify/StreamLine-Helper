@@ -1,6 +1,16 @@
-name: StreamLine Helper
+name: StreamLine-Helper
 version: ${project.version}
 main: net.plasmere.streamlinehelper.StreamLineHelper
 authors: [ Nitrate ]
 description: A plugin to help with the StreamLine Bungeecord plugin!
 website: https://store.plasmere.net
+softdepend:
+  - CMI
+  - Essentials
+
+commands:
+  streamdebug:
+    permission: "streamline.command.streamdebug"
+    aliases:
+      - "sdebug"
+      - "strd"

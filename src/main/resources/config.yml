@@ -1,0 +1,15 @@
+# DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
+version: "1"
+
+#### DEBUG ####
+# Enables debug mode.
+debug: false
+
+# Your essentials plugin API settings.
+essentials:
+  # The order for using essentials plugins.
+  # If CMI is not found, will use Essentials.
+  # If Essentials is not found, will use default settings.
+  use-order: "cmi,essentials"
+  # If to use the API for display names.
+  get-api-display-names: true

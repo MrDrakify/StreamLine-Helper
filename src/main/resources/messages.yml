@@ -1,0 +1,21 @@
+# DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
+version: "1"
+
+# Message shown when a player doesn't have permission.
+no-permission: "&cSorry, but you do not have permission to do this..."
+# For things that only players can do.
+only-players: "&cSorry, but only online players can use this command...!"
+# Player not found...
+no-player: "&cSorry, but that player either does not exist or is not online..."
+
+command-needs-args:
+  # If needs more...
+  more: "&cSorry, but you need to supply more information!"
+  # If needs less...
+  less: "&cSorry, but you need to supply less information!"
+
+debug:
+  message: "&eToggled console debug to %toggle%&8!"
+  toggle:
+    on: "&aTRUE"
+    off: "&cFALSE"
