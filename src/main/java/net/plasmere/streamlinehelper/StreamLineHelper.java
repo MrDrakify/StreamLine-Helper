@@ -4,6 +4,7 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.plasmere.streamlinehelper.config.ConfigHandler;
+import net.plasmere.streamlinehelper.config.ConfigUtils;
 import net.plasmere.streamlinehelper.runnables.OneSecondRunnable;
 import net.plasmere.streamlinehelper.utils.Messenger;
 import net.plasmere.streamlinehelper.utils.PlayerUtils;
@@ -39,7 +40,7 @@ public final class StreamLineHelper extends JavaPlugin implements PluginMessageL
         cmiHolder = new CMIHolder();
         essXHolder = new EssXHolder();
 
-        //checkIfBungee();
+        // if (checkIfBungee()) return;
 
         getServer().getMessenger().registerIncomingPluginChannel(this, customChannel, this);
         getServer().getMessenger().registerOutgoingPluginChannel(this, customChannel);
@@ -63,7 +64,7 @@ public final class StreamLineHelper extends JavaPlugin implements PluginMessageL
         ByteArrayDataInput in = ByteStreams.newDataInput(message);
         String subchannel = in.readUTF();
 
-        getLogger().info("Received plugin message from StreamLine Main on sub-channel \"" + subchannel + "\".");
+        if (ConfigUtils.debug) getLogger().info("Received plugin message from StreamLine Main on sub-channel \"" + subchannel + "\".");
 
         if (subchannel.equals("request.displayname")) {
             Messenger.sendDisplayNameUpdate(player);
@@ -78,14 +79,18 @@ public final class StreamLineHelper extends JavaPlugin implements PluginMessageL
     }
 
     // we check like that if the specified server is BungeeCord.
-    private void checkIfBungee()
+    private boolean checkIfBungee()
     {
-        if (! getServer().spigot().getConfig().getBoolean("settings.bungeecord"))
+        boolean check = getServer().spigot().getConfig().getBoolean("settings.bungeecord");
+
+        if (! check)
         {
             getLogger().severe("This server is not BungeeCord.");
             getLogger().severe("If the server is already hooked to BungeeCord, please enable it into your spigot.yml aswell.");
             getLogger().severe("Plugin disabled!");
             getServer().getPluginManager().disablePlugin(this);
         }
+
+        return check;
     }
 }
