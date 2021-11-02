@@ -18,6 +18,8 @@ public class ConfigHandler {
     private Configuration oConf;
     private Configuration mess;
     private Configuration oMess;
+    private Configuration users;
+    private Configuration oUsers;
 
     private final String configVer = "1";
     private final String messagesVer = "1";
@@ -27,6 +29,8 @@ public class ConfigHandler {
     private final File cfile = new File(StreamLineHelper.instance.getDataFolder(), cstring);
     private final String mstring = "messages.yml";
     private final File mfile = new File(StreamLineHelper.instance.getDataFolder(), mstring);
+    private final String ustring = "users.yml";
+    private final File ufile = new File(StreamLineHelper.instance.getDataFolder(), mstring);
 
     public ConfigHandler(){
         if (! StreamLineHelper.instance.getDataFolder().exists()) {
@@ -44,6 +48,8 @@ public class ConfigHandler {
         Messenger.logInfo("Loaded configuration!");
         mess = loadMess();
         Messenger.logInfo("Loaded messages!");
+        users = loadUsers();
+        Messenger.logInfo("Loaded users!");
 
 //        System.out.println("config load - end");
     }
@@ -64,6 +70,14 @@ public class ConfigHandler {
     public void reloadMessages(){
         try {
             mess = loadMess();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void reloadUsers(){
+        try {
+            users = loadUsers();
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -158,6 +172,26 @@ public class ConfigHandler {
         }
     }
 
+    public Configuration loadUsers(){
+        if (! ufile.exists()){
+            try	(InputStream in = StreamLineHelper.instance.getResource(ustring)){
+                Files.copy(in, cfile.toPath());
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+        Configuration thing = new Configuration();
+
+        try {
+            thing = ConfigurationProvider.getProvider(YamlConfiguration.class).load(ufile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return thing;
+    }
+
     public void saveConf(){
         try {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(conf, cfile);
@@ -169,6 +203,14 @@ public class ConfigHandler {
     public void saveMess(){
         try {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(mess, mfile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveUsers(){
+        try {
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(users, ufile);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -211,6 +253,7 @@ public class ConfigHandler {
 
     public void setObjectConf(String path, Object thing){
         conf.set(path, thing);
+        saveConf();
         reloadConfig();
     }
 
@@ -256,11 +299,33 @@ public class ConfigHandler {
 
     public void setObjectMess(String path, Object thing){
         mess.set(path, thing);
+        saveMess();
         reloadMessages();
     }
 
     public Collection<String> getMessKeys() {
         reloadMessages();
         return mess.getKeys();
+    }
+
+    public List<String> getUsersStringList(String path) {
+        reloadUsers();
+        return users.getStringList(path);
+    }
+
+    public void setUsersStringList(String path, List<String> list) {
+        reloadUsers();
+        users.set(path, list);
+    }
+
+    public Object getObjectUsers(String path){
+        reloadUsers();
+        return users.get(path);
+    }
+
+    public void setObjectUsers(String path, Object thing){
+        users.set(path, thing);
+        saveUsers();
+        reloadUsers();
     }
 }

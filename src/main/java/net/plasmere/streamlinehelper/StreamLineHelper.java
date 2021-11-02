@@ -8,7 +8,9 @@ import net.plasmere.streamlinehelper.config.ConfigUtils;
 import net.plasmere.streamlinehelper.runnables.OneSecondRunnable;
 import net.plasmere.streamlinehelper.utils.Messenger;
 import net.plasmere.streamlinehelper.utils.PlayerUtils;
+import net.plasmere.streamlinehelper.utils.PluginUtils;
 import net.plasmere.streamlinehelper.utils.StringUtils;
+import net.plasmere.streamlinehelper.utils.holder.PAPIHolder;
 import net.plasmere.streamlinehelper.utils.holders.CMIHolder;
 import net.plasmere.streamlinehelper.utils.holders.EssXHolder;
 import org.bukkit.entity.Player;
@@ -24,6 +26,7 @@ public final class StreamLineHelper extends JavaPlugin implements PluginMessageL
     public static ConfigHandler config;
     public static CMIHolder cmiHolder;
     public static EssXHolder essXHolder;
+    public static PAPIHolder papiHolder;
 
     public BukkitRunnable secondsTimer;
 
@@ -39,6 +42,7 @@ public final class StreamLineHelper extends JavaPlugin implements PluginMessageL
         config = new ConfigHandler();
         cmiHolder = new CMIHolder();
         essXHolder = new EssXHolder();
+        papiHolder = new PAPIHolder();
 
         // if (checkIfBungee()) return;
 
@@ -47,6 +51,8 @@ public final class StreamLineHelper extends JavaPlugin implements PluginMessageL
 
         secondsTimer = new OneSecondRunnable();
         secondsTimer.runTaskTimerAsynchronously(this, 0, 20);
+
+        PluginUtils.registerCommands();
     }
 
     @Override
@@ -64,7 +70,7 @@ public final class StreamLineHelper extends JavaPlugin implements PluginMessageL
         ByteArrayDataInput in = ByteStreams.newDataInput(message);
         String subchannel = in.readUTF();
 
-        if (ConfigUtils.debug) getLogger().info("Received plugin message from StreamLine Main on sub-channel \"" + subchannel + "\".");
+        if (ConfigUtils.debug()) getLogger().info("Received plugin message from StreamLine Main on sub-channel \"" + subchannel + "\".");
 
         if (subchannel.equals("request.displayname")) {
             Messenger.sendDisplayNameUpdate(player);

@@ -14,11 +14,11 @@ public class DebugCommand implements CommandExecutor {
             boolean debug = StreamLineHelper.config.getConfBoolean("debug");
             StreamLineHelper.config.setObjectConf("debug", ! debug);
 
-            Messenger.sendMessage(sender, MessageConfUtils.debugMessage
-                    .replace("%toggle%", StreamLineHelper.config.getConfBoolean("debug") ? MessageConfUtils.debugToggleOn : MessageConfUtils.debugToggleOff)
+            Messenger.sendMessage(sender, MessageConfUtils.debugMessage()
+                    .replace("%toggle%", StreamLineHelper.config.getConfBoolean("debug") ? MessageConfUtils.debugToggleOn() : MessageConfUtils.debugToggleOff())
             );
         } else {
-            Messenger.sendMessage(sender, MessageConfUtils.needsLess);
+            Messenger.sendMessage(sender, MessageConfUtils.needsLess());
             return false;
         }
         return true;

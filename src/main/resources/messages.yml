@@ -19,3 +19,6 @@ debug:
   toggle:
     on: "&aTRUE"
     off: "&cFALSE"
+
+script:
+  message: "&eSent a plugin message to frontend StreamLine plugin to run a script on &d%player%&e!"

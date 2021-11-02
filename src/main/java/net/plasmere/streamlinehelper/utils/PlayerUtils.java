@@ -1,6 +1,7 @@
 package net.plasmere.streamlinehelper.utils;
 
 import net.plasmere.streamlinehelper.StreamLineHelper;
+import net.plasmere.streamlinehelper.objects.getting.SavableUser;
 import net.plasmere.streamlinehelper.runnables.TryFindPlayerRunnable;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -12,6 +13,13 @@ import java.util.List;
 
 public class PlayerUtils {
     public static List<BukkitRunnable> findPlayerRunnables = new ArrayList<>();
+    public static List<SavableUser> loadedUsers = new ArrayList<>();
+
+    public static SavableUser removeStat(SavableUser user) {
+        loadedUsers.remove(user);
+
+        return user;
+    }
 
     public static List<Player> onlinePlayers() {
         return new ArrayList<>(StreamLineHelper.instance.getServer().getOnlinePlayers());
@@ -26,6 +34,14 @@ public class PlayerUtils {
     public static Player findPlayerByUUID(String uuid) {
         for (Player player : onlinePlayers()) {
             if (player.getUniqueId().toString().equals(uuid)) return player;
+        }
+
+        return null;
+    }
+
+    public static Player findPlayerByName(String name) {
+        for (Player player : onlinePlayers()) {
+            if (player.getName().equals(name)) return player;
         }
 
         return null;
@@ -87,5 +103,13 @@ public class PlayerUtils {
         if (player == null) return;
 
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, SoundCategory.RECORDS, 1f, 1f);
+    }
+
+    public static SavableUser getStatByUUID(String uuid) {
+        for (SavableUser user : loadedUsers) {
+            if (uuid.equals(user.uuid)) return user;
+        }
+
+        return null;
     }
 }

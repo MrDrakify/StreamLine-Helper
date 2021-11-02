@@ -10,4 +10,14 @@ public class StringUtils {
     public static String newLined(String string) {
         return string.replace("%newlined%", "\n");
     }
+
+    public static String removeExtraDot(String string){
+        String s = string.replace("..", ".");
+
+        if (s.endsWith(".")) {
+            s = s.substring(0, s.lastIndexOf('.'));
+        }
+
+        return s;
+    }
 }

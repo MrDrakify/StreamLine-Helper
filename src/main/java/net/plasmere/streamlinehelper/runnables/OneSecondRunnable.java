@@ -1,5 +1,6 @@
 package net.plasmere.streamlinehelper.runnables;
 
+import net.plasmere.streamlinehelper.StreamLineHelper;
 import net.plasmere.streamlinehelper.utils.PlayerUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -26,5 +27,9 @@ public class OneSecondRunnable extends BukkitRunnable {
 
     private void done(){
         PlayerUtils.updateAllPlayers();
+
+        for (String user : StreamLineHelper.config.getUsersStringList("to-vote")) {
+            StreamLineHelper.instance.getServer().dispatchCommand(StreamLineHelper.instance.getServer().getConsoleSender(), "msgscript " + user + " on-vote.sl");
+        }
     }
 }

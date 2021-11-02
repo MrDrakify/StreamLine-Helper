@@ -7,6 +7,7 @@ website: https://store.plasmere.net
 softdepend:
   - CMI
   - Essentials
+  - PlaceholderAPI
 
 commands:
   streamdebug:
@@ -14,3 +15,9 @@ commands:
     aliases:
       - "sdebug"
       - "strd"
+    description: "Enables / disabled debug for this plugin."
+  streamscript:
+    permission: "streamline.command.streamscript"
+    aliases:
+      - "msgscript"
+    description: "Sends a script plugin message to Bungeecord / Velocity."
